@@ -1,0 +1,86 @@
+﻿@model string
+@{
+    string token = Model;
+}
+<div class="container">
+    <br />
+    <h1>Classifer</h1>
+    <hr />
+    <div class="row main ">
+        <div class="col-md-4 h-100">
+            <div class="row h-100 align-self-lg-center">
+                <fieldset>
+                    <legend>Classify</legend>
+                    <div class="form-group-item" style="margin-left:1px;">
+                        <input type="text" class="form-control input" id="classifyInput" placeholder="Input&#10033;" required />
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-dark" id="singleClassify" style="margin:2px;">Submit</button>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-md-4 h-100">
+            <div class="row h-100">
+                <fieldset>
+                    <legend>getClassifications</legend>
+                    <div class="form-group-item" style="margin-left:1px;">
+                        <input type="text" class="form-control input" id="getClassificationsInput" placeholder="Input&#10033;" required />
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-dark" id="getClassifications" style="margin:2px;">Submit</button>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-md-4 h-100">
+            <div class="row h-100">
+                <fieldset>
+                    <legend>batchClassifications</legend>
+                    <div class="form-group-item" style="margin-left:1px;">
+                        <input type="text" class="form-control input" id="batchClassificationsInput" placeholder="Input&#10033;" required />
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-dark" id="batchClassifications" style="margin:2px;">Submit</button>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <div class="text-center" id="divLoader" style="display:none; ">
+            <img style="height:180px;" src="@Url.Content("~/Content/images/cloud1.gif")" alt="Loader" />
+        </div>
+    </div>
+    <div class="col-center-block table-responsive w-100 text-center" id="results-container" style="margin-top:35px;">
+    </div>
+    <h1>Summarizer</h1>
+    <hr />
+    <div class="text-center">
+        <fieldset class="summ">
+            <legend>summarizetext</legend>
+            <div class="form-group-item" style="margin-left:1px;">
+                <textarea type="text" class="form-control input" id="summarizetextInput" placeholder="Input&#10033;" required></textarea>
+            </div>
+            <div class="form-group-item" style="margin-left:1px;">
+                <input type="text" class="form-control input" id="sentenceNumber" placeholder="Number of Intended Sentences&#10033;" required />
+            </div>
+            <div class="text-center">
+                <button class="btn btn-dark" id="summarizetext" style="margin:2px;">Submit</button>
+            </div>
+        </fieldset>
+    </div>
+    <div class="text-center">
+        <div class="text-center" id="divLoader1" style="display:none; ">
+            <img style="height:180px;" src="@Url.Content("~/Content/images/cloud2.gif")" alt="Loader" />
+        </div>
+    </div>
+    <div class="col-center-block table-responsive w-100 text-center" id="results-container-summ" style="margin-top:35px;">
+    </div>
+
+</div>
+
+@Html.Partial("~/Views/Scripts/Classify.cshtml", token)
+@Html.Partial("~/Views/Scripts/getClassifications.cshtml", token)
+@Html.Partial("~/Views/Scripts/batchClassifications.cshtml", token)
+@Html.Partial("~/Views/Scripts/summarizetext.cshtml", token)

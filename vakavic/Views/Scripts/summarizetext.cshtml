@@ -1,0 +1,46 @@
+﻿@model string
+@{
+    var token = Model.ToString();
+}
+
+<script>
+    $("#summarizetext").click(function (e) {
+        var resultsTabel;
+        $("#divLoader1").show();
+        var input = $("#summarizetextInput").val();
+        var num = $("#sentenceNumber").val();
+        $.ajax({
+            url: 'https://api.vakavic.com/summarizer/summarizetext',
+            type: 'POST',
+            data: {
+                "text": input,
+                "sentenceCount": num
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#divLoader1").hide();
+                resultsTabel = "<hr class=\"seperator\" \/>";
+                resultsTabel += "<h3 class=\"text-center\">Summerized Text<\/h3>";
+                resultsTabel += "<p class=\"text-center\">" + data.remaningAPICalls + " Remaining API Calls" + "<\/p>";
+                resultsTabel += "<\/br >";
+                resultsTabel += "<blockquote class=\"quote-card\">";
+                resultsTabel += "<p>" + data.summary + "<\/p>";
+                resultsTabel += "<cite>" + "Vacavic Summerizer" + "<\/cite>";
+                resultsTabel += "<\/blockquote>";
+
+                $("#results-container-summ").html(resultsTabel);
+            },close: function () {
+                $("#divLoader1").hide();
+                $("#results-container-summ").html(resultsTabel);
+            },
+            error: function (xhr, status, error) {
+                $("#divLoader1").hide();
+                $("#results-container-summ").html(resultsTabel);
+            },
+            error: function () {
+                alert('!');
+            },
+            beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'Bearer ' + '@token'); }
+        });
+    });
+</script>

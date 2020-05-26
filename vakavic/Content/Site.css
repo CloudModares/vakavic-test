@@ -1,0 +1,161 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+body {
+    background-color: #cedbe0;
+}
+
+.main {
+    margin-left: 30px;
+    margin-top: 50px;
+}
+
+fieldset {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: inset 0px 0px 25px #fff;
+    width: 90%;
+    height: 230px;
+}
+
+    fieldset legend {
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        width: 100%;
+        background: #fff;
+        border-radius: 50px 50px 50px 50px;
+        padding: 0px 8px 3px 8px;
+        text-align: center;
+    }
+
+.summ {
+    height: 400px;
+    margin: 50px;
+}
+
+.form-group-item textarea {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 180PX;
+    direction: rtl;
+    max-width: unset !important;
+}
+
+    .form-group-item textarea::-webkit-input-placeholder {
+        -webkit-transition: .5s;
+        direction: ltr;
+    }
+
+    .form-group-item textarea:focus::-webkit-input-placeholder {
+        color: transparent;
+        direction: ltr;
+    }
+
+.form-group-item input {
+    outline: none;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    direction: rtl;
+}
+
+    .form-group-item input:focus {
+        background-color: #eeeeee;
+        outline-width: 0;
+    }
+
+    .form-group-item input::-webkit-input-placeholder {
+        -webkit-transition: .5s;
+        direction: ltr !important;
+    }
+
+    .form-group-item input:focus::-webkit-input-placeholder {
+        color: transparent;
+        direction: ltr !important;
+    }
+
+button {
+    margin: 10px !important;
+    border-radius: 8px !important;
+}
+
+.seperator {
+    box-shadow: 0 0 5px 0 #000, 0 20px 25px 0 rgba(0, 255, 0, 0.1);
+    margin: 50px;
+}
+
+.quote-card {
+    background: #93B7B6;
+    color: #222222;
+    padding: 20px;
+    padding-left: 50px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(34, 34, 34, 0.12);
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    border-radius: 15px;
+}
+
+    .quote-card p {
+        font-size: 22px;
+        line-height: 1.5;
+        margin: 0;
+        max-width: 80%;
+        text-align: justify;
+        direction: rtl;
+        color: white;
+    }
+
+    .quote-card cite {
+        font-size: 16px;
+        margin-top: 10px;
+        display: block;
+        font-weight: 200;
+        opacity: 0.8;
+        text-align: left;
+    }
+
+    .quote-card:before {
+        font-family: Georgia, serif;
+        content: "“";
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 5em;
+        color: rgba(238, 238, 238, 0.8);
+        font-weight: normal;
+    }
+
+    .quote-card:after {
+        font-family: Georgia, serif;
+        content: "”";
+        position: absolute;
+        bottom: -110px;
+        line-height: 100px;
+        right: -32px;
+        font-size: 25em;
+        color: rgba(238, 238, 238, 0.8);
+        font-weight: normal;
+    }

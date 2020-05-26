@@ -1,0 +1,59 @@
+﻿@model string
+@{
+    var token = Model.ToString();
+}
+<script>
+     $("#getClassifications").click(function (e) {
+        var resultsTabel;
+        $("#divLoader").show();
+        var input = $("#getClassificationsInput").val();
+        $.ajax({
+            url: 'https://api.vakavic.com/classifier/getClassifications',
+            type: 'POST',
+            data: {
+                "referenceKey": "db0e3950-9f1a-11ea-8b1b-d5c0040d423c",
+                "text": input
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#divLoader").hide();
+                var result = [];
+                for (var i in data.result.labels)
+                    result.push([i, data.result.labels[i]]);
+                resultsTabel = "<hr class=\"seperator\" \/>";
+                resultsTabel += "<h3 class=\"text-center\">Results<\/h3>";
+                resultsTabel += "<p class=\"text-center\">" + data.remainingAPICalls + " Remaining API Calls" + "<\/[>";
+                resultsTabel += "<\/br >";
+                resultsTabel += "<table class=\"table table-striped table-dark\">";
+                resultsTabel += "<thead class=\"table-bordered thead-dark\">";
+                resultsTabel += "<tr>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">#<\/th>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">Label<\/th>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">Probabilty<\/th>";
+                resultsTabel += "<\/tr>";
+                resultsTabel += "<\/thead>";
+                resultsTabel += "<tbody>";
+                for (var i = 0; i < result.length; i++) {
+                    resultsTabel += "<tr>";
+                    resultsTabel += "<th class=\"text-center align-middle\">" + (i + 1) + "<\/th>";
+                    resultsTabel += "<td class=\"text-center align-middle\">" + result[i][1].label + "<\/td>";
+                    resultsTabel += "<td class=\"text-center align-middle\">" + result[i][1].probability + "<\/td>";
+                    resultsTabel += "<\/tr>";
+                }
+                resultsTabel += "</table>";
+                $("#results-container").html(resultsTabel);
+            }, close: function () {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function (xhr, status, error) {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function () {
+                alert('There is an error with your request.');
+            },
+            beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'Bearer ' + '@token'); }
+        });
+    });
+</script>

@@ -1,0 +1,56 @@
+﻿@model string
+@{ 
+    var token = Model.ToString();
+}
+<script>
+    $("#singleClassify").click(function (e) {
+        var resultsTabel;
+        var resultsRaw;
+        $("#divLoader").show();
+        var input = $("#classifyInput").val();
+        $.ajax({
+            url: 'https://api.vakavic.com/classifier/classify',
+            type: 'POST',
+            data: {
+                "referenceKey": "bcc93350-9f1a-11ea-8b1b-d5c0040d423c",
+                "text": input
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#divLoader").hide();
+                resultsTabel = "<hr class=\"seperator\" \/>";
+                resultsTabel += "<h3 class=\"text-center\">Results<\/h3>";
+                resultsTabel += "<p class=\"text-center\">" + data.remainingAPICalls + " Remaining API Calls" + "<\/[>";
+                resultsTabel += "<\/br >";
+                resultsTabel += "<table class=\"table table-striped table-dark\">";
+                resultsTabel += "<thead class=\"table-bordered thead-dark\">";
+                resultsTabel += "<tr>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">#<\/th>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">Label<\/th>";
+                resultsTabel += "<th class=\"text-center\" scope=\"col\">Probabilty<\/th>";
+                resultsTabel += "<\/tr>";
+                resultsTabel += "<\/thead>";
+                resultsTabel += "<tbody>";
+                resultsTabel += "<tr>";
+                resultsTabel += "<td class=\"text-center align-middle\">" + 1;
+                resultsTabel += "<td class=\"text-center align-middle\">" + data.label;
+                resultsTabel += "<td class=\"text-center align-middle\">" + data.probability + "<\/td>";
+                resultsTabel += "<\/tr>";
+                resultsTabel += "</table>";
+                $("#results-container").html(resultsTabel);
+                $("#results-container-raw").html(data);
+            },close: function () {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function (xhr, status, error) {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function () {
+                alert('There is an error with your request.');
+            },
+            beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'Bearer ' + '@token'); }
+        });
+    });
+</script>

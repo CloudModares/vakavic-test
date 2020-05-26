@@ -1,0 +1,71 @@
+﻿@model string
+@{
+    var token = Model.ToString();
+}
+
+<script>
+    $("#batchClassifications").click(function (e) {
+        var resultsTabel;
+        $("#divLoader").show();
+        var input1 = $("#classifyInput").val();
+        var input2 = $("#getClassificationsInput").val();
+        var input3 = $("#batchClassificationsInput").val();
+        var inputArray =[ input1, input2, input3 ];
+
+        $.ajax({
+            url: 'https://api.vakavic.com/classifier/batchClassification',
+            type: 'POST',
+            data: {
+                "referenceKey": "bcc93350-9f1a-11ea-8b1b-d5c0040d423c",
+                "data": inputArray
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#divLoader").hide();
+                var result = [];
+                for (var i in data.result)
+                    result.push([i, data.result[i].labels]);
+                resultsTabel = "<hr class=\"seperator\" \/>";
+                resultsTabel += "<h3 class=\"text-center\">Results<\/h3>";
+                resultsTabel += "<p class=\"text-center\">" + data.remainingAPICalls + " Remaining" + " & " + data.consumedAPICalls + " Used API Calls" + "<\/[>";
+                resultsTabel += "<\/br >";
+                resultsTabel += "<table class=\"table table-striped table-dark\">";
+
+                resultsTabel += "<tbody>";
+                for (var i = 0; i < result.length; i++) {
+                    resultsTabel += "<tr>";
+                    resultsTabel += "<th colspan=\"3\">" + inputArray[i] + "<\/th>";
+                    resultsTabel += "<thead class=\"table-striped table-dark\">";
+                    resultsTabel += "<tr>";
+                    resultsTabel += "<th class=\"text-center\" scope=\"col\">#<\/th>";
+                    resultsTabel += "<th class=\"text-center\" scope=\"col\">Label<\/th>";
+                    resultsTabel += "<th class=\"text-center\" scope=\"col\">Probabilty<\/th>";
+                    resultsTabel += "<\/tr>";
+                    resultsTabel += "<\/thead>";
+
+                    for (var j = 0; j < result[i][1].length; j++)
+                        {
+                            resultsTabel += "<tr>";
+                            resultsTabel += "<th class=\"text-center align-middle\">" + (j + 1) + "<\/th>";
+                            resultsTabel += "<td class=\"text-center align-middle\">" + result[i][1][j].label + "<\/td>";
+                            resultsTabel += "<td class=\"text-center align-middle\">" + result[i][1][j].probability + "<\/td>";
+                            resultsTabel += "<\/tr>";
+                        }
+                }
+                resultsTabel += "</table>";
+                $("#results-container").html(resultsTabel);
+            }, close: function () {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function (xhr, status, error) {
+                $("#divLoader").hide();
+                $("#results-container").html(resultsTabel);
+            },
+            error: function () {
+                alert('There is an error with your request.');
+            },
+            beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'Bearer ' + '@token'); }
+        });
+    });
+</script>
